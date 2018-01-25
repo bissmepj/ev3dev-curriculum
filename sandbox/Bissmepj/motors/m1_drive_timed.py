@@ -94,7 +94,7 @@ import time
 
 
 def main():
-    print("--------------------------------------------")
+    print("-------------------------------------------")
     print("  Drive using input")
     print("--------------------------------------------")
     ev3.Sound.speak("Drive using input").wait()
