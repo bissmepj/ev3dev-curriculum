@@ -60,11 +60,60 @@ Authors: David Fisher and Nathaniel Huey.
 #
 # TODO: 3. Copy the content of the /examples/motors/drive_input_speed.py program and place it below these comments.
 #   Change the initial print and speak commands to reflect this module, like this...
-#    print("--------------------------------------------")
-#    print("  Timed Driving")
-#    print("--------------------------------------------")
-#    ev3.Sound.speak("Timed Driving").wait()
-# TODO: 4. Change the input questions from:
+   # print("--------------------------------------------")
+  #  print("  Timed Driving")
+ #   print("--------------------------------------------")
+#ev3.Sound.speak("Timed Driving").wait()
+#!/usr/bin/env python3
+"""
+This demo lets you see how to use an input prompt to test different drive speeds.
+
+Author: David Fisher.
+"""
+
+import ev3dev.ev3 as ev3
+import time
+
+
+def main():
+    print("--------------------------------------------")
+    print("  Drive using input")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Drive using input").wait()
+
+    # Connect two large motors on output ports B and C
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    # Check that the motors are actually connected
+    assert left_motor.connected
+    assert right_motor.connected
+
+    time_s = 1  # Any value other than 0.
+    while time_s != 0:
+
+        speed = int(input('Enter a speed from 0 to 900 dps'))
+        dist = int(input('Enter a Distance to Travel'))
+        if speed ==0:
+            break
+        if dist ==0:
+            break
+        left_motor.run_forever(speed_sp=speed)
+        right_motor.run_forever(speed_sp=speed)
+        time.sleep(dist/(speed*4)/360)
+        left_motor.stop()
+        right_motor.stop(stop_action="brake")
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
+
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()
+
+# DONE: 4. Change the input questions from:
 #   Enter a speed for the left motor (0 to 900 dps):
 #   Enter a speed for the right motor (0 to 900 dps):
 #   Enter a time to drive (seconds):
