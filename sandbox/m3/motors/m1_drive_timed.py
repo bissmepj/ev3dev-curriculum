@@ -114,7 +114,7 @@ def main():
 main()
 
 # DONE: 4. Change the input questions from:
-#   Enter a speed for the left motor (0 to 900 dps):
+#   Enter a speed fgaythe left motor (0 to 900 dps):
 #   Enter a speed for the right motor (0 to 900 dps):
 #   Enter a time to drive (seconds):
 # to:
