@@ -97,7 +97,7 @@ def main():
     print("-------------------------------------------")
     print("  Drive using input")
     print("--------------------------------------------")
-    ev3.Sound.speak("Drive using input").wait()
+    ev3.Sound.speak("Gonna fly now").wait()
 
     # Connect two large motors on output ports B and C
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
@@ -109,29 +109,15 @@ def main():
 
     time_s = 1  # Any value other than 0.
     while time_s != 0:
-        left_sp = int(input("Enter a speed for the left motor (0 to 900 dps): "))
-        right_sp = int(input("Enter a speed for the right motor (0 to 900 dps): "))
-        time_s = int(input("Enter a time to drive (seconds): "))
         speed = int(input("Enter a speed (0 to 900 dps): "))
         dist = int(input("Enter a distance (inches): "))
-        if left_sp == 0:
-            return
-        if right_sp == 0:
-            return
-        if time_s == 0:
-            return
         if speed == 0:
-            return
+            break
         if dist == 0:
-            return
-        left_motor.run_forever(speed_sp=left_sp)
-        right_motor.run_forever(speed_sp=right_sp)
-        time.sleep(time_s)
-        left_motor.stop()
-        right_motor.stop(stop_action="brake")
+            break
         left_motor.run_forever(speed_sp=speed)
         right_motor.run_forever(speed_sp=speed)
-        time.sleep((dist * 360) / 4)
+        time.sleep(dist / ((speed * 4) / 360))
         left_motor.stop()
         right_motor.stop()
 
