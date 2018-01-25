@@ -115,15 +115,15 @@ def main():
         speed = int(input("Enter a speed (0 to 900 dps): "))
         dist = int(input("Enter a distance (inches): "))
         if left_sp == 0:
-            return
+            break
         if right_sp == 0:
-            return
+            break
         if time_s == 0:
-            return
+            break
         if speed == 0:
-            return
+            break
         if dist == 0:
-            return
+            break
         left_motor.run_forever(speed_sp=left_sp)
         right_motor.run_forever(speed_sp=right_sp)
         time.sleep(time_s)
@@ -131,7 +131,7 @@ def main():
         right_motor.stop(stop_action="brake")
         left_motor.run_forever(speed_sp=speed)
         right_motor.run_forever(speed_sp=speed)
-        time.sleep((dist * 360) / 4)
+        time.sleep(dist / ((speed * 4) / 360))
         left_motor.stop()
         right_motor.stop()
 
