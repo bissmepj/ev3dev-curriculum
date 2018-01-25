@@ -92,15 +92,16 @@ def main():
     time_s = 1  # Any value other than 0.
     while time_s != 0:
 
-        speed = int(input('Enter a speed from 0 to 900 dps'))
-        dist = int(input('Enter a Distance to Travel'))
+        speed = int(input('Enter a speed from 0 to 900 dps:'))
+        dist = int(input('Enter a Distance to Travel:'))
         if speed ==0:
             break
         if dist ==0:
             break
         left_motor.run_forever(speed_sp=speed)
         right_motor.run_forever(speed_sp=speed)
-        time.sleep(dist/(speed*4)/360)
+        
+        time.sleep(dist/((speed*4)/360))
         left_motor.stop()
         right_motor.stop(stop_action="brake")
 
