@@ -43,7 +43,8 @@ def main():
     print('Press the Back button on the EV3 to exit this program.')"""
     ev3.Sound.speak('Begin Fondling the Buttons')
     btn = ev3.Button()
-    for _ in range(20):
+
+    while btn.down == False:
         if btn.left:
             print("Left")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
@@ -57,6 +58,8 @@ def main():
             print("Up")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+        elif btn.down:
+            break
 
         time.sleep(2.0)
     # Buttons on EV3 (the real focus of this module)
@@ -70,7 +73,7 @@ def main():
 
     current_color_index = 0
     while True:
-        # TODO: 3. Implement the left, right, and up buttons as follows:
+        # DONE: 3. Implement the left, right, and up buttons as follows:
         #    When the up button is being pressed:
         #      -- print the word "up"
         #      -- turn off all LEDs
