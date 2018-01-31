@@ -7,7 +7,7 @@
   rather methods that would be useful regardless of the activity.  For example, don't make
   a connection to the remote control that sends the arm up if the ir remote control up button
   is pressed.  That's a specific input --> output task.  Maybe some other task would want to use
-  the IR remote up button for something different.  Instead just make a method called arm_up that
+  the IR remote up button for something different.  Instead just make a method clled arm_up that
   could be called.  That way it's a generic action that could be used in any task.
 """
 
