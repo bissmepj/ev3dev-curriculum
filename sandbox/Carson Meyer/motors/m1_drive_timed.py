@@ -65,7 +65,8 @@ Authors: David Fisher and Carson Meyer.
 #    print("--------------------------------------------")
 #    ev3.Sound.speak("Timed Driving").wait()
 
-import ev3dev as ev3
+import ev3dev.ev3 as ev3
+import time as time
 
 left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
 right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
@@ -77,6 +78,21 @@ print('---------------------------------------------')
 print('             Timed Driving                   ')
 print('---------------------------------------------')
 ev3.Sound.speak("Timed Driving").wait()
+
+time_s = 1
+while time_s != 0:
+    left_sp = int(input("Enter a speed for the left motor (0 to 900 dps): "))
+    right_sp = int(input("Enter a speed for the right motor (0 to 900 dps): "))
+    time_s = int(input("Enter a time to drive (seconds): "))
+    left_motor.run_forever(speed_sp=left_sp)
+    right_motor.run_forever(speed_sp=right_sp)
+    time.sleep(time_s)
+    left_motor.stop()
+    right_motor.stop(stop_action="brake")
+
+print('Goodbye')
+ev3.Sound.speak('Ciao').wait()
+
 
 
 # DONE: 4. Change the input questions from:

@@ -1,1 +1,1 @@
-class Robot(object):
+#class Robot(object):
