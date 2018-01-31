@@ -21,3 +21,38 @@ class Snatch3r(object):
     
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
+    def drive_straight(self):
+
+        def main():
+            print("-------------------------------------------")
+            print("  Drive using input")
+            print("--------------------------------------------")
+            ev3.Sound.speak("Gonna fly now").wait()
+
+            # Connect two large motors on output ports B and C
+            left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+            right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+            # Check that the motors are actually connected
+            assert left_motor.connected
+            assert right_motor.connected
+
+            time_s = 1  # Any value other than 0.
+            while time_s != 0:
+                speed = int(input("Enter a speed (0 to 900 dps): "))
+                dist = int(input("Enter a distance (inches): "))
+                position = dist * 90
+                if speed == 0:
+                    break
+                if dist == 0:
+                    break
+                left_motor.run_to_rel_pos(position_sp=position, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+                right_motor.run_to_rel_pos(position_sp=position, speed_sp=speed,
+                                           stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+                left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+                ev3.Sound.beep().wait()
+
+            print("Goodbye!")
+            ev3.Sound.speak("Goodbye").wait()
+
+        main()
