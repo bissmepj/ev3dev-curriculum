@@ -50,6 +50,7 @@ Authors: David Fisher and Phil Bissmeyer.
 # Observations you should make, using run_to_rel_pos is useful for accurate turns, but testing takes time.
 import ev3dev.ev3 as ev3
 
+
 def main():
     # --------------------------------------------------------------
     # We have already implemented this module for you.
@@ -57,20 +58,20 @@ def main():
     # You are not allowed to make any changes to this code.
     # --------------------------------------------------------------
     print("--------------------------------------------")
-    print(" Drive inches")
+    print("Turn Degrees")
     print("--------------------------------------------")
-    ev3.Sound.speak("Drive inches").wait()
+    ev3.Sound.speak("Turn Degrees").wait()
     robot = robo.Snatch3r()
 
     while True:
         speed_deg_per_second = int(input("Speed (0 to 900 dps): "))
         if speed_deg_per_second == 0:
             break
-        inches_target = int(input("Distance (inches): "))
-        if inches_target == 0:
+        degrees = int(input("Degrees to turn (inches): "))
+        if degrees == 0:
             break
 
-        robot.drive_inches(inches_target, speed_deg_per_second)
+        robot.turn_degrees(degrees, speed_deg_per_second)
         ev3.Sound.beep().wait()  # Fun little beep
 
     print("Goodbye!")
