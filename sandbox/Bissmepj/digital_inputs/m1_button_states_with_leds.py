@@ -8,7 +8,7 @@ Much like we did in Bissmepj of the motors unit, later we will show you differen
 Authors: David Fisher and Phil Bissmeyer.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Have someone on your team run this program as is on the EV3 and make sure everyone understands the code.
+# DONE: 2. Have someone on your team run this program as is on the EV3 and make sure everyone understands the code.
 #   You will exit the program by pressing the back button on the EV3 brick (button just below the screen).
 #   The back button is already implemented to exit the program (as you can see in the code below).
 
@@ -52,7 +52,6 @@ def main():
                   ev3.Leds.AMBER]
 
     current_color_index = 0
-    btn = ev3.Button
     while True:
         # TODO: 3. Implement the left, right, and up buttons as follows:
         #    When the up button is being pressed:
@@ -75,12 +74,10 @@ def main():
             print("up")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-
         if btn.left:
             print("left")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-            
         if btn.up:
             print("Right")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
