@@ -74,23 +74,26 @@ def main():
                 count += 1
                 print("Down")
                 if count == 1:
-                    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-                    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+                    ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+                    ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    current_color_index += 1
 
 
                 if count == 2:
-                    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
-                    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+                    ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+                    ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    current_color_index += 1
 
 
                 if count == 3:
-                    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
-                    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
-
+                    ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+                    ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    current_color_index += 1
 
                 if count == 4:
-                    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-                    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+                    ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+                    ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    current_color_index = 0
                     count = 0
 
 
