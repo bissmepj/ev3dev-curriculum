@@ -58,7 +58,7 @@ def main():
             print("Up")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-        elif btn.down:
+        elif btn.backspace:
             break
 
         time.sleep(2.0)
