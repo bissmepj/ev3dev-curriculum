@@ -51,7 +51,6 @@ def main():
                   # ev3.Leds.YELLOW,  # Too close to another color in my opinion
                   ev3.Leds.AMBER]
 
-    current_color_index = 0
     count = 0
     while True:
         # DONE: 3. Implement the left, right, and up buttons as follows:
@@ -75,14 +74,20 @@ def main():
             print("up")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+            while btn.up:
+                time.sleep()
         if btn.left:
             print("left")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
-        if btn.up:
+            while btn.left:
+                time.sleep()
+        if btn.right:
             print("Right")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+            while btn.right:
+                time.sleep()
         if btn.down:
             ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[count])
             ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[count])
@@ -90,7 +95,7 @@ def main():
             while btn.down:
                 time.sleep()
 
-        # TODO: 4. Implement the down button to change the color of both LEDs.
+        # DONE: 4. Implement the down button to change the color of both LEDs.
         #   The first press to down should make both LEDs GREEN, the next press makes them RED, then AMBER, then off.
         #   If the user presses the down button again, wrap around the list to GREEN and continue as before.
         #   If the user holds down the button, figure out how to make the color change still only happen once.
@@ -98,7 +103,7 @@ def main():
         #     with a while loop that blocks code execution until the down instance variable is False.
         #     Use a time.sleep(0.01) inside the while loop to do nothing but wait for the button to be released.
 
-        # TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
+        # DONE: 5. Formally test your work. When you think you have the problem complete run these tests:
         #   Press Left - Green left LED is on (try holding the button down for a few seconds when you to the press)
         #   Press Right - Right right LED is on
         #   Press Up - Both LEDs are off
@@ -110,7 +115,7 @@ def main():
         #   Press Down - Both LEDs are Red (the cycle repeats)
         #   Press Back - Both LEDs turn Green, the robot says Goodbye and the program exits
 
-        # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
+        # DONE: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
         #
         # Observation you should make, working with buttons as 'states' is functional but usually 'events' work better.
         # Also observe that we don't use the Enter button.  Enter can cause issues since your program is running at the
