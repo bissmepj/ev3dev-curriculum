@@ -42,9 +42,17 @@ def main():
     # ev3.Leds.all_off()  # Could also use this single command if turning both LEDs off.
     print('Press the Back button on the EV3 to exit this program.')"""
     ev3.Sound.speak('Begin Fondling the Buttons')
-    btn = ev3.Button()
+    btn = ev3.Button()  # Construct the one and only EV3 Button object
+    led_colors = [ev3.Leds.BLACK,  # This list is useful for the down button in TO DO 4.
+                  ev3.Leds.GREEN,
+                  ev3.Leds.RED,
+                  # ev3.Leds.ORANGE,  # Too close to another color in my opinion
+                  # ev3.Leds.YELLOW,  # Too close to another color in my opinion
+                  ev3.Leds.AMBER]
 
-    while btn.down == False:
+    current_color_index = 1
+
+    while True:
         if btn.left:
             print("Left")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
@@ -58,21 +66,18 @@ def main():
             print("Up")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+        elif btn.down:
+            
         elif btn.backspace:
             break
 
-        time.sleep(2.0)
+        time.sleep(.1)
     # Buttons on EV3 (the real focus of this module)
-    btn = ev3.Button()  # Construct the one and only EV3 Button object
-    led_colors = [ev3.Leds.BLACK,  # This list is useful for the down button in TO DO 4.
-                  ev3.Leds.GREEN,
-                  ev3.Leds.RED,
-                  # ev3.Leds.ORANGE,  # Too close to another color in my opinion
-                  # ev3.Leds.YELLOW,  # Too close to another color in my opinion
-                  ev3.Leds.AMBER]
 
-    current_color_index = 0
     while True:
+
+        if btn.backspace:
+            break
         # DONE: 3. Implement the left, right, and up buttons as follows:
         #    When the up button is being pressed:
         #      -- print the word "up"
@@ -98,6 +103,7 @@ def main():
         #   Since you are only allowed to use states, not event callbacks, this last request is a pain, but it's doable
         #     with a while loop that blocks code execution until the down instance variable is False.
         #     Use a time.sleep(0.01) inside the while loop to do nothing but wait for the button to be released.
+
 
         # TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
         #   Press Left - Green left LED is on (try holding the button down for a few seconds when you to the press)
@@ -125,7 +131,7 @@ def main():
     # Best practice to leave the LEDs on after you finish a program so you don't put away the robot while still on.
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-    ev3.Sound.speak("I hate white people").wait()
+    ev3.Sound.speak("Goodbye").wait()
 
 
 # ----------------------------------------------------------------------
