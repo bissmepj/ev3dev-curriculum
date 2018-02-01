@@ -67,17 +67,24 @@ def main():
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
         elif btn.down:
-            
+            ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+            ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+            while btn.down:
+                time.sleep(.01)
+            if current_color_index < len(led_colors)-1:
+                current_color_index += 1
+            else:
+                current_color_index = 0
         elif btn.backspace:
             break
 
         time.sleep(.1)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        ev3.Sound.speak("Goodbye").wait()
     # Buttons on EV3 (the real focus of this module)
 
-    while True:
 
-        if btn.backspace:
-            break
         # DONE: 3. Implement the left, right, and up buttons as follows:
         #    When the up button is being pressed:
         #      -- print the word "up"
@@ -96,7 +103,7 @@ def main():
         #     there just to provide you with code examples for using the LEDs.  It does not need to run anymore.
         #     Just make sure not to comment out too much. ;)
 
-        # TODO: 4. Implement the down button to change the color of both LEDs.
+        # DONE: 4. Implement the down button to change the color of both LEDs.
         #   The first press to down should make both LEDs GREEN, the next press makes them RED, then AMBER, then off.
         #   If the user presses the down button again, wrap around the list to GREEN and continue as before.
         #   If the user holds down the button, figure out how to make the color change still only happen once.
@@ -124,14 +131,10 @@ def main():
         #   same time as the Brickman operating system.  Both are receiving the button events.  That can be changed, but
         #   it's too much trouble to do here.  So instead we just don't use the Enter button.
 
-        if btn.backspace:
-            break
-        time.sleep(0.01)  # Best practice to have a short delay to avoid working too hard between loop iterations.
+         # Best practice to have a short delay to avoid working too hard between loop iterations.
 
     # Best practice to leave the LEDs on after you finish a program so you don't put away the robot while still on.
-    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-    ev3.Sound.speak("Goodbye").wait()
+
 
 
 # ----------------------------------------------------------------------
