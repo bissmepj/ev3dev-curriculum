@@ -76,23 +76,23 @@ def main():
                 if count == 1:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
                     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-                    break
+
 
                 if count == 2:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
                     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
-                    break
+
 
                 if count == 3:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.AMBER)
                     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.AMBER)
-                    break
+
 
                 if count == 4:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
                     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
                     count = 0
-                    break
+
 
 
             elif btn.backspace:
