@@ -26,12 +26,17 @@ ev3.Sound.speak("Encoded Driving").wait()
 
 time_s = 1
 while time_s != 0:
-    left_sp = int(input("Enter a speed for the left motor (0 to 900 dps): "))       #Enter an input for the speed of each motor.
-    right_sp = int(input("Enter a speed for the right motor (0 to 900 dps): "))
-    motor_turns_degrees = int(input('Enter distance of travel for robot: '))        #Enter in DEGREES OF ROTATION for the motor. SPEED simply says how fast to do these rotations.
-    left_motor.run_to_rel_pos(position_sp=motor_turns_degrees, speed_sp=left_sp, stop_action='coast')
-    right_motor.run_to_rel_pos(position_sp=motor_turns_degrees, speed_sp=right_sp, stop_action='coast')
-    ev3.Sound.beep().wait()
+        speed = int(input("Enter a speed (0 to 900 dps): "))
+        dist = int(input("Enter a distance (inches): "))
+        position = dist * 90
+        if speed == 0:
+            break
+        if dist == 0:
+            break
+        left_motor.run_to_rel_pos(position_sp=position, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        right_motor.run_to_rel_pos(position_sp=position, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
 
 print('Goodbye')
 ev3.Sound.speak('Ciao').wait()
