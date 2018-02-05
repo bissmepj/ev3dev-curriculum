@@ -21,6 +21,8 @@ class Snatch3r(object):
     
 
     def __init__(self):
+        self.left_led = ev3.Leds.LEFT
+        self.right_led = ev3.Leds.RIGHT
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
@@ -79,3 +81,14 @@ class Snatch3r(object):
         ev3.Sound.beep()
 
         self.arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
+    def shutdown(self, dc):
+        dc.running = False
+
+        self.left_motor.stop(stop_action='brake')
+        self.right_motor.stop(stop_action='brake')
+
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+
+        print('Goodbye')
+        ev3.Sound.speak('Goodbye').wait()
