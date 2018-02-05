@@ -4,10 +4,10 @@ Time to move your arm movement functions into your Snatch3r robot library.
 
 This module will work exactly the same as the prior module but will do that work via your robot library.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Nathaniel Huey.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Have everyone talk about this problem together then pick one team member to modify libs/robot_controller.py
+# DONE: 2. Have everyone talk about this problem together then pick one team member to modify libs/robot_controller.py
 # as necessary to make the code below perform the same task as the prior module. Once the code has been tested and shown
 # to work, then have that person commit their work.  All other team members need to do a VCS --> Update project...
 # Once the library is implemented each team member should be able to run their version of this code on the robot.
@@ -49,7 +49,13 @@ def main():
             print(command_to_run, "is not a known command. Please enter a valid choice.")
 
     ev3.Sound.speak("Goodbye").wait()
+def arm_down(arm_motor):
+    MAX_SPEED = 900
 
+    # Code that attempts to do this task but has bugs.  Fix them.
+    arm_motor.run_to_abs_pos(position_sp=0, speed_sp=MAX_SPEED)
+    arm_motor.wait_while(ev3.Motor.STATE_RUNNING)  # Blocks until the motor finishes running
+    ev3.Sound.beep()
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
