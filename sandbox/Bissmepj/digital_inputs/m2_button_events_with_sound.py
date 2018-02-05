@@ -90,6 +90,7 @@ def handle_up_button(button_state):
     """Handle IR / button event."""
     if button_state:
         print("Up button is pressed")
+        play_song_by_individual_tones()
     else:
         print("Up button was released")
 
@@ -98,6 +99,7 @@ def handle_down_button(button_state):
     """Handle IR / button event."""
     if button_state:
         print("Down button is pressed")
+        play_song_by_notes_list()
     else:
         print("Down button was released")
 
@@ -106,6 +108,7 @@ def handle_left_button(button_state):
     """Handle IR / button event."""
     if button_state:
         print("Left button is pressed")
+        speak()
     else:
         print("Left button was released")
 
@@ -114,6 +117,7 @@ def handle_right_button(button_state):
     """Handle IR / button event."""
     if button_state:
         print("Right button is pressed")
+        play_wav_file()
     else:
         print("Right button was released")
 
