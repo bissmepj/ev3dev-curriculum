@@ -40,7 +40,7 @@ def main():
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
     # ev3.Leds.all_off()  # Could also use this single command if turning both LEDs off.
-    print('Press the Back button on the EV3 to exit this program.')
+    print('I am a colorful robot')
 
     # Buttons on EV3 (the real focus of this module)
     btn = ev3.Button()  # Construct the one and only EV3 Button object
@@ -76,23 +76,27 @@ def main():
                 if count == 1:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
                     ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    ev3.Sound.speak('The cake is a lie')
                     current_color_index += 1
 
 
                 if count == 2:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
                     ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    ev3.Sound.speak('If I only had a brain')
                     current_color_index += 1
 
 
                 if count == 3:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
                     ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    ev3.Sound.speak('All work and no play makes E V 3 a dull bot')
                     current_color_index += 1
 
                 if count == 4:
                     ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
                     ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+                    ev3.Sound.speak('C S class why did it have to be C S class')
                     current_color_index = 0
                     count = 0
 
@@ -155,7 +159,7 @@ def main():
     # Best practice to leave the LEDs on after you finish a program so you don't put away the robot while still on.
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-    ev3.Sound.speak("Goodbye").wait()
+    ev3.Sound.speak("Ciao").wait()
 
 
 # ----------------------------------------------------------------------
