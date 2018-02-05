@@ -86,10 +86,13 @@ def main():
     remote.on_red_down = lambda state: handle_red_down_1(state, dc)
     remote.on_blue_up = lambda state: handle_blue_up_1(state, dc)
     remote.on_blue_down = lambda state: handle_blue_down_1(state, dc)
+
     remote2 = ev3.RemoteControl(channel=2)
     remote2.on_red_up = lambda state: handle_red_up_2(state, dc)
+
     remote3 = ev3.RemoteControl(channel=3)
     remote3.on_red_up = lambda state: handle_red_up_3(state, dc)
+
     remote4 = ev3.RemoteControl(channel=4)
     remote4.on_red_up = lambda state: handle_red_up_4(state, dc)
     # Buttons on EV3
@@ -99,7 +102,10 @@ def main():
     while dc.running:
         # DONE: 4. Call the .process() method on your channel 1 RemoteControl object, then review and run your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
-
+        remote.process()
+        remote2.process()
+        remote3.process()
+        remote4.process()
         # DONE: 6. Call the .process() method on your channel 2 - 4 RemoteControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
 
