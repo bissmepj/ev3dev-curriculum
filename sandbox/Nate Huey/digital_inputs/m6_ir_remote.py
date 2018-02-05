@@ -116,7 +116,7 @@ def handle_move_red_down(state, robot):
         robot.left_motor.run_forever(speed_sp=-600)
     else:
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
-        robot.left_motor.stop(stop_action=-600)
+        robot.left_motor.stop(stop_action='brake')
 
 def handle_move_blue_up(state, robot):
     if state:
