@@ -108,7 +108,7 @@ def main():
     # Note: on EV3 you call connect_to_pc, but in the PC code it will call connect_to_ev3
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
-    mqtt_client.connect_to_pc(mosquitto.csse.rose-hulman.edu, 10)
+    mqtt_client.connect_to_pc("mosquitto.csse.rose-hulman.edu", 10)
 
 
     # Buttons on EV3 (these obviously assume TO DO: 3. is done)
