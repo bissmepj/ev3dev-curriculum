@@ -32,6 +32,18 @@ Author: David Fisher.
 import mqtt_remote_method_calls as com
 import robot_controller as robo
 
+robot = robo.Snatch3r
+class MyDelegate(object):
+
+    def __init__(self):
+        self.running = True
+    def movement(self, command, left_speed, right_speed):
+
+        print("Received: {} {} {}".format(command, left_speed, right_speed))
+
+        drive_command = None
+        if command == 'forward':
+            robot.forward(left_speed, right_speed)
 
 def main():
     robot = robo.Snatch3r()

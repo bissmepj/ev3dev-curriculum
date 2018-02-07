@@ -91,7 +91,7 @@ def main():
 
     back_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<Down>', lambda event: some_callback1(mqtt_client, left_speed_entry, right_speed_entry))
-    
+
     up_button = ttk.Button(main_frame, text="Up")
     up_button.grid(row=5, column=0)
     up_button['command'] = lambda: send_up(mqtt_client)
@@ -126,6 +126,11 @@ def main():
 
 
 # Arm command callbacks
+def drive_forward(mqtt_client, left_speed_entry, right_speed_entry):
+    print('drive_forward')
+    mqtt_client.send_message('drive_forward')
+
+def turn_left(mqtt_client, left_speed_entry, right_speed_entry):
 def send_up(mqtt_client):
     print("arm_up")
     mqtt_client.send_message("arm_up")
