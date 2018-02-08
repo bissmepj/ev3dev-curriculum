@@ -104,7 +104,7 @@ def seek_beacon(robot):
             elif current_heading > 2:
                 robot.right(100, 100)
                 print("Adjusting heading: ", current_heading)
-            if current_distance < 3:
+            if current_distance == 0:
                 robot.stop()
                 print("I found the beacon")
                 return True
