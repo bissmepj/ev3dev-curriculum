@@ -26,7 +26,7 @@ def main():
 
     robot = robo.Snatch3r()
     # Note, it is assumed that you have a touch_sensor property on the Snatch3r class.
-    # Presumably you added this in the digital_inputs unit, if not add it now so that
+    # Presumably you added this in digital_inputs unit, if not add it now so that
     # the code below works to monitor the touch_sensor.
 
     while not robot.touch_sensor.is_pressed:
