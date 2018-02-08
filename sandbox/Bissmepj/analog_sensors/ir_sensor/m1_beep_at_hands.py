@@ -8,8 +8,8 @@ Check every 0.1 seconds for a hand and print the proximity value each check.
 
 Setup the program to continue to run until the user presses the touch sensor.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.  February 2017.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Phil Bissmeyer.  February 2017.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -26,7 +26,7 @@ def main():
 
     robot = robo.Snatch3r()
     # Note, it is assumed that you have a touch_sensor property on the Snatch3r class.
-    # Presumably you added this in the digital_inputs unit, if not add it now so that
+    # Presumably you added this in digital_inputs unit, if not add it now so that
     # the code below works to monitor the touch_sensor.
 
     while not robot.touch_sensor.is_pressed:
