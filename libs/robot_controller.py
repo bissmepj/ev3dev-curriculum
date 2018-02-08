@@ -29,6 +29,8 @@ class Snatch3r(object):
         self.touch_sensor = ev3.TouchSensor()
         self.running = False
         self.color_sensor = ev3.ColorSensor()
+        self.ir_sensor = ev3.InfraredSensor
+        assert self.ir_sensor
         assert self.color_sensor
         assert self.left_motor
         assert self.right_motor
