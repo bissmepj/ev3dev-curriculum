@@ -86,6 +86,7 @@ class Snatch3r(object):
         ev3.Sound.beep()
 
         self.arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
+
     def shutdown(self, dc):
         dc.running = False
         self.running = False
@@ -97,25 +98,32 @@ class Snatch3r(object):
 
         print('Goodbye')
         ev3.Sound.speak('Goodbye').wait()
+
     def loop_forever(self):
         self.running = True
         while self.running:
             time.sleep(.01)
+
     def forward(self,left_speed,right_speed):
         self.left_motor.run_forever(speed_sp=left_speed)
         self.right_motor.run_forever(speed_sp=right_speed)
+
     def backward(self, left_speed, right_speed):
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
+
     def left(self,left_speed, right_speed):
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=right_speed)
+
     def right(self, left_speed, right_speed):
         self.left_motor.run_forever(speed_sp=left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
+
     def stop(self):
         self.left_motor.stop(stop_action='brake')
         self.right_motor.stop(stop_action='brake')
+
     def shutdown2(self):
         self.running = False
         self.left_motor.stop(stop_action='brake')
