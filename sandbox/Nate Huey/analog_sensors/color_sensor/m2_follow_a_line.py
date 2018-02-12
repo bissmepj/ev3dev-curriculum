@@ -29,8 +29,8 @@ def main():
 
     # DONE: 4: After running the code set the default white and black levels to a better initial guess.
     #   Once you have the values hardcoded to resonable numbers here you don't really need the w and b commands below.
-    white_level = 90
-    black_level = 3
+    white_level = 80
+    black_level = 10
     robot = robo.Snatch3r()
 
     while True:
@@ -44,11 +44,13 @@ def main():
             #   assert self.color_sensor
             # Then here you can use a command like robot.color_sensor.reflected_light_intensity
             white_level = robot.color_sensor.reflected_light_intensity
+
             print("New white level is {}.".format(white_level))
         elif command_to_run == 'b':
             print("Calibrate the black light level")
             # DONE: 3. Read the reflected_light_intensity property of the color sensor and set black_level
             black_level = robot.color_sensor.reflected_light_intensity
+
             print("New black level is {}.".format(black_level))
         elif command_to_run == 'f':
             print("Follow the line until the touch sensor is pressed.")
@@ -73,23 +75,25 @@ def follow_the_line(robot, white_level, black_level):
       :type white_level: int
       :type black_level: int
     """
+    x = 0
+    while True:
+        if robot.touch_sensor.is_pressed == True:
+            break
+        if robot.color_sensor.reflected_light_intensity > white_level:
+            robot.forward(200, 200)
+        if robot.color_sensor.reflected_light_intensity < black_level:
+            robot.right(200, 200)
+        time.sleep(0.1)
+        x += 1
+        if x > 300:
+            break
 
     # DONE: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
     # should drive straight or turn to the right.  You will need to test and refine your code until it works well.
     # Optional extra - For a harder challenge could you drive on the black line and handle left or right turns?
-    count_degrees = 0
-    while True:
-        if robot.color_sensor.reflected_light_intensity > 80:
-            robot.forward(400,400)
-        elif robot.color_sensor.reflected_light_intensity < 20:
-            count_degrees += 1
-            robot.turn_degrees(1,400)
-            robot.forward(400,400)
-        if count_degrees == 400:
-            break
 
     robot.stop()
-    ev3.Sound.speak("Done")
+    ev3.Sound.speak("Goodbye")
 
 
 # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
