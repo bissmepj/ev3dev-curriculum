@@ -10,12 +10,12 @@ If the width reading is greater than 0 then you should make your robot beep.  If
 robot beeps thinking blue is present, but no blue is present) try setting the threshold higher than 0 (see what works
 for your environment). After a beep wait for at least 1 second to avoid lots of annoying beeps.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Carson Meyer.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-import ev3dev.ev3 as ev3
 import time
 
+import ev3dev.ev3 as ev3
 import robot_controller as robo
 
 
@@ -25,18 +25,25 @@ def main():
     print("--------------------------------------------")
     ev3.Sound.speak("Beep at blue").wait()
     print("Press the touch sensor to exit this program.")
-
+    pixy = ev3.Sensor(driver_name="pixy-lego")            #Gives the pixy sensor a value name
+    assert pixy                                           #Checks to see if the sensor is actually attatched
     robot = robo.Snatch3r()
     robot.pixy.mode = "SIG1"
 
     while not robot.touch_sensor.is_pressed:
-        # TODO: 2. Implement the module as described in the opening comment block.
+        # DONE: 2. Implement the module as described in the opening comment block.
         # It is recommended that you add to your Snatch3r class's constructor the pixy object, as shown
         #   self.pixy = ev3.Sensor(driver_name="pixy-lego")
         #   assert self.pixy
         # Then here you can use a command like width = robot.pixy.value(3)
-
-
+        width = pixy.value(3)                       #These values are used to gather and store data from the pixy camera
+        height = pixy.value(4)
+        x = pixy.value(1)
+        y = pixy.value(2)
+        print("(X, Y) = ({}, {}), Width = {}    Height = {}". format(x, y, width, height))
+        if width > 1:
+            ev3.Sound.beep()
+            time.sleep(1)
 
         time.sleep(0.1)
 

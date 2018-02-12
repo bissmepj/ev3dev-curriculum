@@ -4,11 +4,11 @@ This includes the ability to lift up or put down the paint brush and to select c
 Quit button on Robot, arrow keys to move, u and j to lift arm
 """
 
-import time
-import ev3dev.ev3 as ev3
-import robot_controller as robo
 import tkinter
 from tkinter import ttk
+
+import ev3dev.ev3 as ev3
+
 import mqtt_remote_method_calls as com
 
 

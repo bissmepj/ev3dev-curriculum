@@ -13,9 +13,9 @@ for your environment). After a beep wait for at least 1 second to avoid lots of 
 Authors: David Fisher and Nathaniel Huey.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-import ev3dev.ev3 as ev3
 import time
 
+import ev3dev.ev3 as ev3
 import robot_controller as robo
 
 
@@ -45,13 +45,12 @@ def main():
             ev3.Sound.beep()
             time.sleep(1)
 
-
         time.sleep(0.1)
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
-# TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet.
+# DONE: 3. Call over a TA or instructor to sign your team's checkoff sheet.
 #
 # Observations you should make, the Pixy cam can detect colors.  That's just neat. ;)
 
