@@ -18,9 +18,7 @@ import time
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
-    
-
-    def __init__(self):
+    def __init__(self):  # Initializes the Robot and it's components
         self.left_led = ev3.Leds.LEFT
         self.right_led = ev3.Leds.RIGHT
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
@@ -39,7 +37,7 @@ class Snatch3r(object):
         assert self.right_motor
         assert self.left_motor
 
-    def drive_inches(self, dist, speed):
+    def drive_inches(self, dist, speed):  # Drives a given distance and speed, determined by the user.
 
         position = dist * 90
 
@@ -47,7 +45,7 @@ class Snatch3r(object):
         self.right_motor.run_to_rel_pos(position_sp=position, speed_sp=speed, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
-    def turn_degrees(self, degrees, speed ):
+    def turn_degrees(self, degrees, speed):  # Turns robot by given degrees at given speed
 
         degrees = degrees * 4.6
 
@@ -56,28 +54,24 @@ class Snatch3r(object):
 
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
-    def arm_down(self):
-        MAX_SPEED = 900
-
-
-
-
-
-        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=MAX_SPEED)
+    def arm_down(self):  # Returns arm to down position from up position.
+        max_speed = 900
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=max_speed)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep()
 
-    def arm_up(self):
-        MAX_SPEED = 900
-        self.arm_motor.run_forever(speed_sp=MAX_SPEED)
+    def arm_up(self):  # Moves arm upwards, this causes the Snatch3r to grab whatever is in front of it.
+        max_speed = 900
+        self.arm_motor.run_forever(speed_sp=max_speed)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
         self.arm_motor.stop(stop_action='brake')
         ev3.Sound.beep()
 
-    def arm_calibration(self):
-        MAX_SPEED = 900
-        self.arm_motor.run_forever(speed_sp=MAX_SPEED)
+    def arm_calibration(self):  # Calibrates the arm by moving it up to it's limit
+        # and then sends it down the determined distance for its 0 point.
+        max_speed = 900
+        self.arm_motor.run_forever(speed_sp=max_speed)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
         self.arm_motor.stop(stop_action='brake')
@@ -90,7 +84,7 @@ class Snatch3r(object):
 
         self.arm_motor.position = 0  # Calibrate the down position as 0 (this line is correct as is).
 
-    def shutdown(self, dc):
+    def shutdown(self, dc):  # Stops robot and breaks it out of its forever loop.
         dc.running = False
         self.running = False
         self.left_motor.stop(stop_action='brake')
@@ -102,32 +96,32 @@ class Snatch3r(object):
         print('Goodbye')
         ev3.Sound.speak('Goodbye').wait()
 
-    def loop_forever(self):
+    def loop_forever(self):  # Sets the robot in an infinite loop of actions.
         self.running = True
         while self.running:
             time.sleep(.01)
 
-    def forward(self,left_speed,right_speed):
+    def forward(self, left_speed, right_speed):  # Drives forward at given speeds until told to stop.
         self.left_motor.run_forever(speed_sp=left_speed)
         self.right_motor.run_forever(speed_sp=right_speed)
 
-    def backward(self, left_speed, right_speed):
+    def backward(self, left_speed, right_speed):  # Drives backward at given speeds until told to stop.
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
 
-    def left(self,left_speed, right_speed):
+    def left(self, left_speed, right_speed):  # Turns the robot left at given speeds until told to stop or move.
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=right_speed)
 
-    def right(self, left_speed, right_speed):
+    def right(self, left_speed, right_speed):  # Turns the robot right at the given speeds until told to stop.
         self.left_motor.run_forever(speed_sp=left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
 
-    def stop(self):
+    def stop(self):  # Stops the robot.
         self.left_motor.stop(stop_action='brake')
         self.right_motor.stop(stop_action='brake')
 
-    def shutdown2(self):
+    def shutdown2(self):  # Shuts down the robot when in an infinite loop and breaks the loop.
         self.running = False
         self.left_motor.stop(stop_action='brake')
         self.right_motor.stop(stop_action='brake')
@@ -135,7 +129,8 @@ class Snatch3r(object):
         ev3.Sound.speak('Goodbye')
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-    def seek_beacon(self,channel,forward_speed, turn_speed):
+
+    def seek_beacon(self, channel, forward_speed, turn_speed):  # Using the IR sensor, tracks and picks-up the beacon.
         self.beacon_seeker = ev3.BeaconSeeker(channel=channel)
         while not self.touch_sensor.is_pressed:
             # The touch sensor can be used to abort the attempt (sometimes handy during testing)
@@ -168,19 +163,8 @@ class Snatch3r(object):
                     self.right(turn_speed, turn_speed)
                     print("Heading is too far off to fix: ", current_heading)
 
-
-
-                    # Here is some code to help get you started
-
-                    # Close enough of a heading to move forward
-
-                    # You add more!
-
             time.sleep(0.2)
-
         # The touch_sensor was pressed to abort the attempt if this code runs.
         print("Abandon ship!")
         self.stop()
         return False
-
-
