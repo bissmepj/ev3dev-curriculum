@@ -16,15 +16,59 @@ class MyDelegate(object):
         self.running = True
         self.color = "Black"
         self.robot = robot
+        self.arm_state = 0
 
     def turn_left(self):
-        self.robot.turn_degrees(90, 100)
+        degrees = 90 * 4.6
+
+        self.robot.left_motor.run_to_rel_pos(position_sp=-degrees, speed_sp=100, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.robot.right_motor.run_to_rel_pos(position_sp=degrees, speed_sp=100, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+        self.robot.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    def turn_right(self):
+        degrees = 90 * 4.6
+
+        self.robot.left_motor.run_to_rel_pos(position_sp=degrees, speed_sp=200, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.robot.right_motor.run_to_rel_pos(position_sp=-degrees, speed_sp=200, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+        self.robot.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    def forward(self):
+        degrees = 360
+
+        self.robot.left_motor.run_to_rel_pos(position_sp=degrees, speed_sp=200, stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.robot.right_motor.run_to_rel_pos(position_sp=degrees, speed_sp=200,
+                                              stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+        self.robot.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    def arm(self):
+        if self.arm_state == 0:
+            self.robot.arm_up()
+            self.arm_state = 1
+        else:
+            self.robot.arm_down()
+            self.arm_state = 0
 
 
 def main():
     robot = robo.Snatch3r()
-    mqtt_client = com.MqttClient(robot)
+    delegate = MyDelegate(robot)
+    mqtt_client = com.MqttClient(delegate)
     mqtt_client.connect_to_pc()
+    time.sleep(3)
+    print("I'm Ready")
+    btn = ev3.Button
+    btn.on_up = lambda state: color_change(mqtt_client, ev3.ColorSensor.color)
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
-    robot.loop_forever()  # Calls a function that has a while True loop within it to avoid letting the program end.
+    while True:
+        btn.process()
+        time.sleep(.1)
 
+
+def color_change(client, color):
+    client.send_message("color_change", [color])
+
+
+main()
