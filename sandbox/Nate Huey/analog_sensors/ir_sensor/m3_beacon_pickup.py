@@ -31,7 +31,7 @@ def main():
     print("--------------------------------------------")
     print(" Beacon pickup")
     print("--------------------------------------------")
-    ev3.Sound.speak("Beacon pickup").wait()
+    ev3.Sound.speak("Beacon Pickup").wait()
 
     #####################################################
     # There are no TODOs in this code.

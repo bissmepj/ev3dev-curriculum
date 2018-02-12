@@ -134,7 +134,7 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
     def seek_beacon(self,channel,forward_speed, turn_speed):
-        self.beacon_seeker = ev3.BeaconSeeker(channel)
+        self.beacon_seeker = ev3.BeaconSeeker(channel=channel)
         while not self.touch_sensor.is_pressed:
             # The touch sensor can be used to abort the attempt (sometimes handy during testing)
 
@@ -144,11 +144,12 @@ class Snatch3r(object):
             if current_distance == -128:
                 # If the IR Remote is not found just sit idle for this program until it is moved.
                 print("IR Remote not found. Distance is -128")
-                self.right(turn_speed, turn_speed)
+                self.stop()
             else:
 
                 if math.fabs(current_heading) < 2:
                     if current_distance == 1:
+                        time.sleep(1)
                         self.stop()
                         return True
                     if current_distance > 1:
@@ -162,7 +163,7 @@ class Snatch3r(object):
                         self.right(turn_speed, turn_speed)
                         print("Adjusting heading: ", current_heading)
                 if math.fabs(current_heading) > 10:
-                    self.stop()
+                    self.right(turn_speed, turn_speed)
                     print("Heading is too far off to fix: ", current_heading)
 
 
