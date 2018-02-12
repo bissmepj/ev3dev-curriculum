@@ -30,6 +30,7 @@ class Snatch3r(object):
         self.running = False
         self.color_sensor = ev3.ColorSensor()
         self.ir_sensor = ev3.InfraredSensor()
+        self.beacon_seeker = ev3.BeaconSeeker()
         assert self.ir_sensor
         assert self.color_sensor
         assert self.left_motor
@@ -124,3 +125,51 @@ class Snatch3r(object):
         ev3.Sound.speak('Goodbye')
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+    def seek_beacon(self,channel,forward_speed, turn_speed):
+        self.beacon_seeker = ev3.BeaconSeeker(channel)
+        while not self.touch_sensor.is_pressed:
+            # The touch sensor can be used to abort the attempt (sometimes handy during testing)
+
+            # DONE: 3. Use the beacon_seeker object to get the current heading and distance.
+            current_heading = self.beacon_seeker.heading  # use the beacon_seeker heading
+            current_distance = self.beacon_seeker.distance  # use the beacon_seeker distance
+            if current_distance == -128:
+                # If the IR Remote is not found just sit idle for this program until it is moved.
+                print("IR Remote not found. Distance is -128")
+                self.right(turn_speed, turn_speed)
+            else:
+
+                if math.fabs(current_heading) < 2:
+                    if current_distance == 1:
+                        self.stop()
+                        return True
+                    if current_distance > 1:
+                        print("On the right heading. Distance: ", current_distance)
+                        self.forward(forward_speed, forward_speed)
+                if math.fabs(current_heading) > 2 and math.fabs(current_heading) < 10:
+                    if current_heading < 0:
+                        self.left(turn_speed, turn_speed)
+                        print("Adjusting heading: ", current_heading)
+                    if current_heading > 0:
+                        self.right(turn_speed, turn_speed)
+                        print("Adjusting heading: ", current_heading)
+                if math.fabs(current_heading) > 10:
+                    self.stop()
+                    print("Heading is too far off to fix: ", current_heading)
+
+
+
+                    # Here is some code to help get you started
+
+                    # Close enough of a heading to move forward
+
+                    # You add more!
+
+            time.sleep(0.2)
+
+        # The touch_sensor was pressed to abort the attempt if this code runs.
+        print("Abandon ship!")
+        self.stop()
+        return False
+
+
