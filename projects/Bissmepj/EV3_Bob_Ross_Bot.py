@@ -61,7 +61,7 @@ def main():
     print("I'm Ready")
     btn = ev3.Button
     btn.on_up = lambda state: color_change(mqtt_client, ev3.ColorSensor.color)
-    # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
+    # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IPaddress of a GCP broker
     while True:
         btn.process()
         time.sleep(.1)
