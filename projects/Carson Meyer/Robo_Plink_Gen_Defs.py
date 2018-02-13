@@ -17,17 +17,15 @@
 import random
 import time
 
-
 def main():
     shuffle_x(get_x())
 
 
 def get_x():
     x = []
-    pick_x = input("Pick your six numbers!")
-    string_x = str(pick_x)
-    for k in range(len(string_x)):
-        x += int(string_x[k])
+    for k in range(6):
+        x += [int(input("Pick a number!"))]
+
     return x
 
 
@@ -35,6 +33,7 @@ def shuffle_x(x):
     print(x)
     time.sleep(1)
     print("Here comes the shuffle!")
+    time.sleep(1)
     random.shuffle(x)
     print(x)
 
