@@ -27,17 +27,8 @@ class MyDelegate(object):
         self.arm_state = 0  # 0 is down, 1 is up
 
     def color_change(self, lego_color):
-        if lego_color == ev3.ColorSensor.COLOR_BLACK:
-            self.color = "black"
-        elif lego_color == ev3.ColorSensor.COLOR_BLUE:
-            self.color = "blue"
-        elif lego_color == ev3.ColorSensor.COLOR_GREEN:
-            self.color = "green"
-        elif lego_color == ev3.ColorSensor.COLOR_YELLOW:
-            self.color = "yellow"
-        elif lego_color == ev3.ColorSensor.COLOR_RED:
-            self.color = "red"
-        self.color_label["text"] = self.color
+        self.color_label["text"] = lego_color
+        self.color = lego_color
 
     def update(self):
         self.canvas.coords(self.rect, [self.x - 2, self.y - 2, self.x + 2, self.y + 2])

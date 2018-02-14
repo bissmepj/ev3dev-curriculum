@@ -72,7 +72,7 @@ def main():
     print("I'm Ready")
 
     btn = ev3.Button()
-    btn.on_up = lambda state: color_change(mqtt_client, ev3.ColorSensor.color)
+    btn.on_up = lambda state: color_change(mqtt_client, robot)
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IPaddress of a GCP broker
 
     while True:
@@ -80,7 +80,21 @@ def main():
         time.sleep(.1)
 
 
-def color_change(client, color):
+def color_change(client, robot):
+    color = robot.color_sensor.color
+    if color == ev3.ColorSensor.COLOR_BLACK:
+        color = "black"
+    elif color == ev3.ColorSensor.COLOR_BLUE:
+        color = "blue"
+    elif color == ev3.ColorSensor.COLOR_GREEN:
+        color = "green"
+    elif color == ev3.ColorSensor.COLOR_YELLOW:
+        color = "yellow"
+    elif color == ev3.ColorSensor.COLOR_RED:
+        color = "red"
+    else:
+        color = "black"
+
     client.send_message("color_change", [color])
 
 
