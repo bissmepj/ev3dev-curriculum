@@ -13,7 +13,7 @@ import mqtt_remote_method_calls as com
 
 class MyDelegate(object):
 
-    def __init__(self, canvas, rect, label, label2):
+    def __init__(self, canvas, rect, label, label2, label3):
         self.running = True
         self.color = "black"
         self.x = 200
@@ -23,6 +23,7 @@ class MyDelegate(object):
         self.canvas = canvas
         self.heading_label = label
         self.brush_label = label2
+        self.color_label = label3
         self.arm_state = 0  # 0 is down, 1 is up
 
     def color_change(self, lego_color):
@@ -36,6 +37,7 @@ class MyDelegate(object):
             self.color = "yellow"
         elif lego_color == ev3.ColorSensor.COLOR_RED:
             self.color = "red"
+        self.color_label["text"] = self.color
 
     def update(self):
         self.canvas.coords(self.rect, [self.x - 2, self.y - 2, self.x + 2, self.y + 2])
@@ -52,7 +54,7 @@ def main():
     main_frame.grid()
 
     canvas = tkinter.Canvas(main_frame, background="lightgray", width=400, height=400)
-    canvas.grid(columnspan=2, rowspan=8)
+    canvas.grid(columnspan=2, rowspan=10)
 
     quit_button = ttk.Button(main_frame, text="Quit")
     quit_button.grid(row=8, column=3)
@@ -84,9 +86,14 @@ def main():
     brush_update_label = ttk.Label(main_frame, text="Drawing!")
     brush_update_label.grid(row=6, column=3)
 
+    color_label = ttk.Label(main_frame, text="Current Color -->")
+    color_label.grid(row=7, column=2)
+    color_update_label = ttk.Label(main_frame, text="black")
+    color_update_label.grid(row=7, column=3)
+
     rect = canvas.create_rectangle(198, 198, 202, 202, fill="orange")
 
-    my_del = MyDelegate(canvas, rect, heading_update_label, brush_update_label)
+    my_del = MyDelegate(canvas, rect, heading_update_label, brush_update_label, color_update_label)
     mqtt_client = com.MqttClient(my_del)
     mqtt_client.connect_to_ev3()
 

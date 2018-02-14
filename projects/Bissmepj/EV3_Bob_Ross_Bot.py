@@ -52,7 +52,15 @@ class MyDelegate(object):
             self.arm_state = 0
 
     def quit(self):
-        self.robot.shutdown()
+        self.robot.running = False
+        self.robot.left_motor.stop(stop_action='brake')
+        self.robot.right_motor.stop(stop_action='brake')
+
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+
+        print('Goodbye')
+        ev3.Sound.speak('Goodbye').wait()
 
 
 def main():
@@ -63,7 +71,7 @@ def main():
     time.sleep(3)
     print("I'm Ready")
 
-    btn = ev3.Button
+    btn = ev3.Button()
     btn.on_up = lambda state: color_change(mqtt_client, ev3.ColorSensor.color)
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IPaddress of a GCP broker
 
