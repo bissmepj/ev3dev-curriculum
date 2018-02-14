@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 The goal of this module is to practice doing MQTT communication.  In this module you will only write code that runs on
-the EV3.  The code that runs on the PC (m3_pc_led_button_communication.py) is already written for you.  You will need to
+the EV3.  The code that runs on the PC (MQTT_Code.py) is already written for you.  You will need to
 implement this module, run it on your EV3, then at the same time run m3_pc_led_button_com.py on your computer to do the
 communication.  Summary of the communication:
 
@@ -17,12 +17,12 @@ communication.  Summary of the communication:
       The method name sent will be "button_pressed" which will have 1 parameter (sent as a List with 1 item)
          The parameter sent will be the either ["Up"], ["Down"], ["Left"], or ["Right"] (always a List with 1 item)
 
-  PC receiving (this code is already complete in m3_pc_led_button_communication.py, which will run on your PC):
+  PC receiving (this code is already complete in MQTT_Code.py, which will run on your PC):
       The PC will have a delegate that has a method called "button_pressed" which receives 1 string:
         button_name (the only parameter) will be either "Up", "Down", "Left", or "Right"
         That method is already done and it displays the result to the Tkinter gui window.
 
-  PC sending (this code is already complete in m3_pc_led_button_communication.py, which will run on your PC):
+  PC sending (this code is already complete in MQTT_Code.py, which will run on your PC):
       The PC will send an mqtt message to the EV3 whenever a Tkinter button is clicked.
       The method name sent will be "set_led" which will have 2 parameters (sent as a List with 2 items)
         The first parameter will be either "left" or "right"
@@ -30,7 +30,7 @@ communication.  Summary of the communication:
       That method is already done and it will send when buttons are clicked on the Tkinter GUI.
 
 Implement the TODOs below to complete this module, then transfer the file to the EV3 (as done in many previous units),
-  then run this module on the EV3 while at the same time, running m3_pc_led_button_communication.py on your PC.
+  then run this module on the EV3 while at the same time, running MQTT_Code.py on your PC.
 
 Authors: David Fisher and PUT_YOUR_NAME_HERE.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.

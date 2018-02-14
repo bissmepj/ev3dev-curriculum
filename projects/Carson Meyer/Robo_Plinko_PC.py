@@ -16,4 +16,4 @@
 
 import random
 
-def plinko (x, ):
+#def plinko (x, ):

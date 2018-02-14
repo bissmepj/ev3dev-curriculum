@@ -16,16 +16,23 @@
 
 import random
 import time
-
+import ev3dev.ev3 as ev3
+import robot_controller as robo
 def main():
     shuffle_x(get_x())
 
-
 def get_x():
     x = []
-    for k in range(6):
-        x += [int(input("Pick a number!"))]
-
+    #ev3.Sound.speak('Pick your numbers')
+    while len(x) < 6:
+        j = input("Pick a number between 0 and 9!")
+        if j.isnumeric():
+            if 0 <= int(j) <= 9:
+                x.append(int(j))
+            else:
+                print('The number has to be between 0 and 9')
+        else:
+            print('The input has to be a number')
     return x
 
 
@@ -33,10 +40,20 @@ def shuffle_x(x):
     print(x)
     time.sleep(1)
     print("Here comes the shuffle!")
+    #ev3.Sound.speak('Here comes the shuffle')
     time.sleep(1)
     random.shuffle(x)
     print(x)
 
+#def prediction():
 #def plinko (x):
+
+    #count = 0
+    #robot = robo.Snatch3r
+    #white_level = 91
+    #if robot.color_sensor.relfected_light_intensity == white_level:
+        #count += 1
+
+
 
 main()
