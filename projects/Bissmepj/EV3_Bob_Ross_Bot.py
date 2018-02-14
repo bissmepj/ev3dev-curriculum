@@ -5,8 +5,9 @@ Quit button on Robot, arrow keys to move, u and j to lift arm
 """
 
 import robot_controller as robo
-
+import time
 import mqtt_remote_method_calls as com
+import ev3dev.ev3 as ev3
 
 
 class MyDelegate(object):
@@ -50,6 +51,9 @@ class MyDelegate(object):
             self.robot.arm_down()
             self.arm_state = 0
 
+    def quit(self):
+        self.robot.shutdown()
+
 
 def main():
     robot = robo.Snatch3r()
@@ -58,9 +62,11 @@ def main():
     mqtt_client.connect_to_pc()
     time.sleep(3)
     print("I'm Ready")
+
     btn = ev3.Button
     btn.on_up = lambda state: color_change(mqtt_client, ev3.ColorSensor.color)
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IPaddress of a GCP broker
+
     while True:
         btn.process()
         time.sleep(.1)
