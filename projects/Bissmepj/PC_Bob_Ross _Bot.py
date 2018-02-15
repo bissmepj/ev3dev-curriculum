@@ -5,7 +5,6 @@ Quit button on Robot, arrow keys to move, u and j to lift arm
 """
 
 import time
-import ev3dev.ev3 as ev3
 import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
