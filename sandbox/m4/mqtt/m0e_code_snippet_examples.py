@@ -9,10 +9,11 @@ https://docs.google.com/presentation/d/1gQt1K4X2xzcspKMn2S0X98vhzVNmLA-xoQe5rp58
 Author: David Fisher
 """
 
-import ev3dev.ev3 as ev3
 import time
 
+import ev3dev.ev3 as ev3
 import robot_controller as robo
+
 import mqtt_remote_method_calls as com
 
 

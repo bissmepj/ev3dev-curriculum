@@ -15,9 +15,9 @@ q - Quit
 Authors: David Fisher and Phil Bissmeyer.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-import ev3dev.ev3 as ev3
 import time
 
+import ev3dev.ev3 as ev3
 import robot_controller as robo
 
 

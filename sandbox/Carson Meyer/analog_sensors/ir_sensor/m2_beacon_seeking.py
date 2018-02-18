@@ -11,12 +11,11 @@ prompted if they want to find the beacon again (presumably you move it first) or
 
 Authors: David Fisher and Carson Meyer.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+import math
+import time
 import traceback
 
 import ev3dev.ev3 as ev3
-import time
-import math
-
 import robot_controller as robo
 
 
@@ -90,6 +89,7 @@ def seek_beacon(robot):
             if math.fabs(current_heading) < 2:
                 # Close enough of a heading to move forward
                 print("On the right heading. Distance: ", current_distance)
+                ev3.Sound.speak("My Spy D senses are tingling")
                 # You add more!
                 if math.fabs(current_distance) <= 0:
                     print("You found the beacon!")
@@ -124,7 +124,7 @@ def seek_beacon(robot):
     robot.stop()
     return False
 
-    # TODO: 6. Demo your program by putting the beacon within a few feet of the robot, within 30 degrees of straight in
+    # DONE: 6. Demo your program by putting the beacon within a few feet of the robot, within 30 degrees of straight in
     # front.  The robot should drive to and stop at the beacon.  After a successful run move the beacon then do it again
     # for the demo.  During testing if your robot fails to find the beacon remember that you can press the touch sensor
     # to abandon ship on the attempt. ;) You must demo 2 successful finds to check off but you can have as many attempts
