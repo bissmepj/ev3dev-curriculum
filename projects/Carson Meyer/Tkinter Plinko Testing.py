@@ -16,6 +16,9 @@ import mqtt_remote_method_calls as com
 import random
 
 import time
+
+import ev3dev.ev3 as ev3
+
 class MyDelegateOnThePc(object):
     """ Helper class that will receive MQTT messages from the EV3. """
 
@@ -27,9 +30,10 @@ class MyDelegateOnThePc(object):
         message_to_display = "{} was pressed.".format(button_name)
         self.display_label.configure(text=message_to_display)
 
+
 def main():
     get_numbers()
-    guess_numbers()
+
 
 def get_numbers():
     seq_x = []
@@ -47,15 +51,15 @@ def get_numbers():
 
     one_button = ttk.Button(main_frame, text="1")
     one_button.grid(row=4, column=0)
-    one_button['command'] = lambda: piece_together(mqtt_client, 1, seq_x)
+    one_button['command'] = lambda: piece_together(1, seq_x, main_frame, root)
 
     two_button = ttk.Button(main_frame, text="2")
     two_button.grid(row=4, column=1)
-    two_button['command'] = lambda: piece_together(mqtt_client, 2, seq_x)
+    two_button['command'] = lambda: piece_together(2, seq_x, main_frame, root)
 
     three_button = ttk.Button(main_frame, text="3")
     three_button.grid(row=4, column=2)
-    three_button['command'] = lambda: piece_together(mqtt_client, 3, seq_x)
+    three_button['command'] = lambda: piece_together(3, seq_x, main_frame, root)
 
     PLINKO_label = ttk.Label(main_frame, text="  Let's play PLINKO!  ")
     PLINKO_label.grid(row=0, column=1)
@@ -65,31 +69,31 @@ def get_numbers():
 
     four_button = ttk.Button(main_frame, text="4")
     four_button.grid(row=5, column=0)
-    four_button['command'] = lambda: piece_together(mqtt_client, 4, seq_x)
+    four_button['command'] = lambda: piece_together(4, seq_x, main_frame, root)
 
     five_button = ttk.Button(main_frame, text="5")
     five_button.grid(row=5, column=1)
-    five_button['command'] = lambda: piece_together(mqtt_client, 5, seq_x)
+    five_button['command'] = lambda: piece_together(5, seq_x, main_frame, root)
 
     six_button = ttk.Button(main_frame, text="6")
     six_button.grid(row=5, column=2)
-    six_button['command'] = lambda: piece_together(mqtt_client, 6, seq_x)
+    six_button['command'] = lambda: piece_together(6, seq_x, main_frame, root)
 
     seven_button = ttk.Button(main_frame, text="7")
     seven_button.grid(row=6, column=0)
-    seven_button['command'] = lambda: piece_together(mqtt_client, 7, seq_x)
+    seven_button['command'] = lambda: piece_together(7, seq_x, main_frame, root)
 
     eight_button = ttk.Button(main_frame, text="8")
     eight_button.grid(row=6, column=1)
-    eight_button['command'] = lambda: piece_together(mqtt_client, 8, seq_x)
+    eight_button['command'] = lambda: piece_together(8, seq_x, main_frame, root)
 
     nine_button = ttk.Button(main_frame, text="9")
     nine_button.grid(row=6, column=2)
-    nine_button['command'] = lambda: piece_together(mqtt_client, 9, seq_x)
+    nine_button['command'] = lambda: piece_together(9, seq_x, main_frame, root)
 
     zero_button = ttk.Button(main_frame, text="0")
     zero_button.grid(row=7, column=1)
-    zero_button['command'] = lambda: piece_together(mqtt_client, 0, seq_x)
+    zero_button['command'] = lambda: piece_together(0, seq_x, main_frame, root)
 
     # Buttons for quit and exit
     q_button = ttk.Button(main_frame, text="Quit")
@@ -103,8 +107,12 @@ def get_numbers():
 
     root.mainloop()
 
-def guess_numbers():
+    return seq_x
+
+
+def guess_numbers(root, sequence):
     my_guess = 0
+    root.destroy()
 
     root = tkinter.Tk()
     root.title("PLINKO!")
@@ -120,19 +128,18 @@ def guess_numbers():
 
     one_button = ttk.Button(main_frame, text="1")
     one_button.grid(row=4, column=0)
-    one_button['command'] = lambda: which_slot(mqtt_client, my_guess, 1)
+    one_button['command'] = lambda: which_slot(my_guess, 1, main_frame, sequence, root)
 
     two_button = ttk.Button(main_frame, text="2")
     two_button.grid(row=4, column=1)
-    two_button['command'] = lambda: which_slot(mqtt_client, my_guess, 2)
+    two_button['command'] = lambda: which_slot(my_guess, 2, main_frame, sequence, root)
 
     three_button = ttk.Button(main_frame, text="3")
     three_button.grid(row=5, column=0)
-    three_button['command'] = lambda: which_slot(mqtt_client, my_guess, 3)
-
+    three_button['command'] = lambda: which_slot(my_guess, 3, main_frame, sequence, root)
     four_button = ttk.Button(main_frame, text="4")
     four_button.grid(row=5, column=1)
-    four_button['command'] = lambda: which_slot(mqtt_client, my_guess, 4)
+    four_button['command'] = lambda: which_slot(my_guess, 4, main_frame, sequence, root)
 
     button_message = ttk.Label(main_frame, text="--")
     button_message.grid(row=2, column=1)
@@ -149,10 +156,33 @@ def guess_numbers():
 
     root.mainloop()
 
-def which_slot(mqtt_client, guess, number):
+
+def plinko(sequence, guess, root):
+    root.destroy()
+    print(sequence)
+    print(guess)
+    for k in range(6):
+        if sequence[k] >= 5:
+            print('robot left')
+
+        else:
+            print('robot right')
+
+    if my_guess == 2:
+        print("You made it!")
+
+    else:
+        print("Better luck next time!")
+
+
+def which_slot(guess, number, main_frame, sequence, root):
     print("My guess is slot {}".format(number))
     guess = number
-    return quit_program(mqtt_client)
+    next_button = ttk.Button(main_frame, text='Next')
+    next_button.grid(row=10, column=0)
+    next_button['command'] = lambda: plinko(sequence, guess, root)
+    return guess
+
 
 def shuffle_numbers(seq_x):
     print(seq_x)
@@ -162,18 +192,21 @@ def shuffle_numbers(seq_x):
     random.shuffle(seq_x)
     time.sleep(1)
     print(seq_x)
-    #return seq_x
 
 
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
-def piece_together(mqtt_client, number, sequence):
-    print('Appending number = {}'.format(number))
-    sequence.append(number)
-    if len(sequence) > 5:
+def piece_together(number, sequence, main_frame, root):
+    if len(sequence) < 6:
+        print('Appending number = {}'.format(number))
+        sequence.append(number)
+    if 5 < len(sequence) == 6:
         shuffle_numbers(sequence)
-        return quit_program(mqtt_client)
+        next_button = ttk.Button(main_frame, text='Next')
+        next_button.grid(row=10, column=0)
+        next_button['command'] = lambda: guess_numbers(root, sequence)
+
 
 def quit_program(mqtt_client):
     mqtt_client.close()
@@ -183,4 +216,7 @@ def quit_program(mqtt_client):
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
+seq_x = []
+my_guess = 0
+
 main()
