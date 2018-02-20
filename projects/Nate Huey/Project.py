@@ -3,67 +3,73 @@ import tkinter
 from tkinter import ttk
 import mqtt_remote_method_calls as com
 
-class MyDelegateOnPc(object):
+class MyDelegateOnThePc(object):
+    """ Helper class that will receive MQTT messages from the EV3. """
 
-    def rescued(self):
-        print("Hostage was Rescued")
+    def __init__(self, label_to_display_messages_in):
+        self.display_label = label_to_display_messages_in
 
-
-
-
+    def message(self, button_name):
+        print("Received: " + button_name)
+        message_to_display = "Current action is: {}. ".format(button_name)
+        self.display_label.configure(text=message_to_display)
 
 
 def main():
-    # DONE: 2. Setup an mqtt_client.  Notice that since you don't need to receive any messages you do NOT need to have
-    # a MyDelegate class.  Simply construct the MqttClient with no parameter in the constructor (easy).
-    # Delete this line, it was added temporarily so that the code we gave you had no errors.
-    mqtt_client = com.MqttClient()
-    mqtt_client.connect_to_ev3("mosquitto.csse.rose-hulman.edu", 10)
-
     root = tkinter.Tk()
-    root.title("Rescue Drone")
+    root.title("Figthing Robot")
 
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
+    left_side_label = ttk.Label(main_frame, text="Defense")
+    left_side_label.grid(row=0, column=0)
 
-    bomb_code_label = ttk.Label(main_frame, text='Bomb Code')
-    bomb_code_label.grid(row=8, column=1)
-    bomb_code_entry = ttk.Entry(main_frame, width=16)
-    bomb_code_entry.grid(row=9, column=1)
+    spin = ttk.Button(main_frame, text="Death Spin")
+    spin.grid(row=3, column=2)
+    spin['command'] = lambda: send_spin(mqtt_client)
 
-    bomb_entry = ttk.Button(main_frame, text='Enter Code')
-    bomb_entry.grid(row=10, column=1)
-    bomb_entry['command'] = lambda: defuse_bomb(mqtt_client, int(bomb_code_entry.get()))
+    perimeter = ttk.Button(main_frame, text="Perimeter")
+    perimeter.grid(row=2, column=0)
+    perimeter['command'] = lambda: send_perimeter(mqtt_client)
 
+    follow = ttk.Button(main_frame, text="Follow Enemy")
+    follow.grid(row=3, column=0)
+    follow['command'] = lambda: send_follow(mqtt_client)
 
-    # DONE: 3. Implement the callbacks for the drive buttons. Set both the click and shortcut key callbacks.
-    #
-    # To help get you started the arm up and down buttons have been implemented.
-    # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
-    # out. You will need to change some_callback1 to some better name, then pattern match for other button / key combos.
+    button_label = ttk.Label(main_frame, text="  Buttom messages from EV3  ")
+    button_label.grid(row=1, column=1)
 
+    button_message = ttk.Label(main_frame, text="--")
+    button_message.grid(row=2, column=1)
+
+    right_side_label = ttk.Label(main_frame, text="Offense")
+    right_side_label.grid(row=0, column=2)
+
+    seek = ttk.Button(main_frame, text="Seek Enemy")
+    seek.grid(row=1, column=2)
+    seek['command'] = lambda: send_seek(mqtt_client)
+
+    control = ttk.Button(main_frame, text="Remote Control")
+    control.grid(row=2, column=2)
+    control['command'] = lambda: send_control(mqtt_client)
+
+    stop = ttk.Button(main_frame, text="Stop")
+    stop.grid(row=1, column=0)
+    stop['command'] = lambda: send_stop(mqtt_client)
+
+    spacer = ttk.Label(main_frame, text="")
+    spacer.grid(row=4, column=2)
 
     # Buttons for quit and exit
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=5, column=2)
-    q_button['command'] = (lambda: quit_program(mqtt_client, False))
+    q_button['command'] = (lambda: quit_program(mqtt_client))
 
-    e_button = ttk.Button(main_frame, text="Exit")
-    e_button.grid(row=6, column=2)
-    e_button['command'] = (lambda: quit_program(mqtt_client, True))
-
-    hostage_rescue = ttk.Button(main_frame, text="Rescue")
-    hostage_rescue.grid(row=7, column=0)
-    hostage_rescue['command'] = (lambda: rescue_mission(mqtt_client))
-
-    bomb_defusal = ttk.Button(main_frame, text="Defusal")
-    bomb_defusal.grid(row=7, column=1)
-    bomb_defusal['command'] = (lambda: defusal_mission(mqtt_client))
-
-    recon = ttk.Button(main_frame, text='Recon')
-    recon.grid(row=7, column=2)
-    recon['command'] = (lambda: recon_mission(mqtt_client))
+    pc_delegate = MyDelegateOnThePc(button_message)
+    mqtt_client = com.MqttClient(pc_delegate)
+    mqtt_client.connect_to_ev3()
+    # mqtt_client.connect_to_ev3("35.194.247.175")  # Off campus IP address of a GCP broker
 
     root.mainloop()
 
@@ -71,29 +77,31 @@ def main():
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
-# DONE: 4. Implement the functions for the drive button callbacks.
 
 
-def rescue_mission(mqtt_client):
-    print('Rescue')
-    mqtt_client.send_message("rescue")
-def defusal_mission(mqtt_client):
-    print('Defusal')
-    mqtt_client.send_message('defusal', [])
-def recon_mission(mqtt_client):
-    print('Recon')
-    mqtt_client.send_message('recon')
-def defuse_bomb(mqtt_client, code):
-    print('Entering Code')
-    if code == 7355608:
-        print('Bomb Has Been Defused')
-        mqtt_client.send_message("defused")
+def send_spin(mqtt_client):
+    print('Death Spin')
+    mqtt_client.send_message('spin')
+def send_stop(mqtt_client):
+    print('Stop')
+    mqtt_client.send_message('stop')
+def send_seek(mqtt_client):
+    print('Seek Enemy')
+    mqtt_client.send_message('seek')
+def send_control(mqtt_client):
+    print('User Control')
+    mqtt_client.send_message('control')
+def send_follow(mqtt_client):
+    print('Follow Enemy')
+    mqtt_client.send_message('follow')
+def send_perimeter(mqtt_client):
+    print('Follow Perimeter')
+    mqtt_client.send_message('perimeter')
 
-# Quit and Exit button callbacks
-def quit_program(mqtt_client, shutdown_ev3):
-    if shutdown_ev3:
-        print("shutdown")
-        mqtt_client.send_message("shutdown")
+
+
+def quit_program(mqtt_client):
+    mqtt_client.send_message('quit')
     mqtt_client.close()
     exit()
 
