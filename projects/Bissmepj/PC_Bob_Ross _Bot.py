@@ -91,6 +91,7 @@ def main():
     root.bind('<Right>', lambda event: turn_right(mqtt_client, my_del))
     root.bind('<Up>', lambda event: forward(mqtt_client, my_del, canvas))
     root.bind('<Down>', lambda event: change_arm(mqtt_client, my_del))
+    root.bind('<q>', lambda event: calibrate(mqtt_client))
 
     root.mainloop()
 
@@ -99,6 +100,10 @@ def quit_program(mqtt_client):
     mqtt_client.send_message("quit")
     mqtt_client.close()
     exit()
+
+
+def calibrate(client):
+    client.send_message('reset')
 
 
 def turn_left(client, delegate):

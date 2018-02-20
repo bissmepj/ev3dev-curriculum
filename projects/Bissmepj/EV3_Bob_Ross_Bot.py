@@ -62,6 +62,9 @@ class MyDelegate(object):
         print('Goodbye')
         ev3.Sound.speak('Goodbye').wait()
 
+    def reset(self):
+        self.robot.arm_calibration()
+
 
 def main():
     robot = robo.Snatch3r()
