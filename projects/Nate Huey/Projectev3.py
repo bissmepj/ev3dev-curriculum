@@ -59,6 +59,7 @@ class MyDelegate(object):
         robot.arm_down()
         time.sleep(5)
         robot.stop()
+
     def control(self):
         dc = DataContainer()
         remote1 = ev3.RemoteControl(channel=1)

@@ -37,7 +37,7 @@ def main():
     follow.grid(row=3, column=0)
     follow['command'] = lambda: send_follow(mqtt_client)
 
-    button_label = ttk.Label(main_frame, text="  Buttom messages from EV3  ")
+    button_label = ttk.Label(main_frame, text="               ")
     button_label.grid(row=1, column=1)
 
     button_message = ttk.Label(main_frame, text="--")
