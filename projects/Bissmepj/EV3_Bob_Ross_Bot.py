@@ -47,9 +47,11 @@ class MyDelegate(object):
         if self.arm_state == 0:
             self.robot.arm_up()
             self.arm_state = 1
+            ev3.Sound.speak('Not Drawing').wait()
         else:
             self.robot.arm_down()
             self.arm_state = 0
+            ev3.Sound.speak('Drawing').wait()
 
     def quit(self):
         self.robot.running = False
@@ -73,6 +75,7 @@ def main():
     mqtt_client.connect_to_pc()
     time.sleep(3)
     print("I'm Ready")
+    ev3.Sound.speak('Lets paint a pretty picture').wait()
 
     btn = ev3.Button()
     btn.on_up = lambda state: color_change(mqtt_client, robot)
