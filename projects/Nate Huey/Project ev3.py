@@ -16,8 +16,6 @@ class MyDelegate(object):
     def __init__(self):
         self.running = True
 
-
-        print("Received: {}".format(move))
     def stop(self):
         robot.stop()
         ev3.Leds.LEFT =ev3.Leds.GREEN
@@ -84,59 +82,32 @@ class MyDelegate(object):
             time.sleep(0.01)
 
         robot.stop()
-        elif move == 'spin':
-            robot.right(900, 900)
-            time.sleep(10)
+    def spin(self):
+        robot.right(900, 900)
+        time.sleep(10)
 
-        if move == None:
-            print("An Error Occurred")
+    def quit(self):
+        robot.stop()
+        ev3.Sound.speak("Goodbye").wait()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        exit()
 
 def main():
     print("--------------------------------------------")
     print("Fighting Robot")
     print("--------------------------------------------")
-    ev3.Sound.speak("LED Button communication").wait()
+    ev3.Sound.speak("Robot Fight Simulator").wait()
 
-    # DONE: 3. Create an instance of your delegate class and an MQTT client, passing in the delegate object.
-    # Note: you can determine the variable names that you should use by looking at the errors underlined in later code.
-    # Once you have that done connect the mqtt_client to the MQTT broker using the connect_to_pc method.
-    # Note: on EV3 you call connect_to_pc, but in the PC code it will call connect_to_ev3
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc('mosquitto.csse.rose-hulman.edu', 10)
     robot.loop_forever()
 
-
-
-
-
-    ev3.Sound.speak("Goodbye").wait()
-    ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-    ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-
-
-# ----------------------------------------------------------------------
-# Button event callback functions
-# ----------------------------------------------------------------------
-def handle_button_press(button_state, mqtt_client, button_name):
-    """Handle IR / button event."""
-    if button_state:
-        print("{} button was pressed".format(button_name))
-        mqtt_client.send_message('button_pressed',[button_name])
-        # DONE: 4. Send a message using MQTT that will:
-        #   -- Call the method called "button_pressed" on the delegate at the other end of the pipe.
-        #   -- Pass the parameters [button_name] as a list.
-        # This is meant to help you learn the mqtt_client.send_message syntax.
-        # You can review the code above to understand how button_name is passed into this function.
-
-
-
-
-
-def handle_shutdown(button_state, my_delegate):
+def handle_shutdown(button_state, dc):
     """Exit the program."""
     if button_state:
-        my_delegate.running = False
+        dc.running = False
 
 def handle_move_red_up(state, robot):
     if state:
